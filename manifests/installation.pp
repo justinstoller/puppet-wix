@@ -19,6 +19,11 @@ define wix::installation(
   }
 
   $on_disk = "${destination}\\${pkg_name}"
+  $prettier_ver = $version ? {
+    '35' => '3.5',
+    '36' => '3.6',
+    '37' => '3.7'
+  }
 
   file { $on_disk:
     ensure => file,
@@ -26,7 +31,7 @@ define wix::installation(
     mode   => '750',
   }
 
-  package { 'WiX Toolset':
+  package { "Windows Installer XML Toolset ${prettier_ver}":
     ensure => present,
     source => $on_disk,
     install_options => $install_opts
